@@ -1,9 +1,18 @@
-import { expect, it, describe } from "vitest";
+import { describe, expect, it } from "vitest";
 import { Equal, Expect } from "../helpers/type-utils";
 
-export const getHomePageFeatureFlags = (
-  config: unknown,
-  override: (flags: unknown) => unknown
+export const getHomePageFeatureFlags = <TConfig extends {
+  rawConfig: {
+    featureFlags: {
+      homePage: {
+        showBanner: boolean;
+        showLogOut: boolean;
+      };
+    };
+  };
+}>(
+  config: TConfig,
+  override: <TOveride>(flags: TOveride) => TOveride
 ) => {
   return override(config.rawConfig.featureFlags.homePage);
 };
